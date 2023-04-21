@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brocodedemo.HelloController">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Label layoutX="312.0" layoutY="14.0" text="Our project" textFill="#e31010">
          <font>
@@ -109,8 +108,12 @@
             <TableColumn fx:id="colomn_year_of_creation" prefWidth="97.0" text="year Of Creation" />
         </columns>
       </TableView>
+      <!--
+
       <Button fx:id="btn_buy" layoutX="18.0" layoutY="464.0" mnemonicParsing="false" onAction="#Buy" prefHeight="50.0" prefWidth="85.0" text="Buy" />
       <Button fx:id="btn_sell" layoutX="113.0" layoutY="464.0" mnemonicParsing="false" onAction="#Sell" prefHeight="50.0" prefWidth="85.0" text="Sell" />
       <Button fx:id="btn_update" layoutX="208.0" layoutY="464.0" mnemonicParsing="false" onAction="#Update" prefHeight="50.0" prefWidth="85.0" text="Update" />
+      -->
    </children>
 </AnchorPane>
+

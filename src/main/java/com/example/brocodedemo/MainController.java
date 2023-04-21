@@ -1,19 +1,20 @@
 package com.example.brocodedemo;
 
-import java.net.URL;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Objects;
-import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -24,7 +25,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableRow;
-public class HelloController {
+import javafx.stage.Stage;
+
+public class MainController {
+    //تعريف المتغيرات
     @FXML
     private Button btn_buy;
 
@@ -87,11 +91,11 @@ public class HelloController {
 
     @FXML
     void Buy(ActionEvent event) {
-        String lawInfo , address,yearOfCreation,price, area,floors = null,rooms = null;
+        String lawInfo, address, yearOfCreation, price, area, floors = null, rooms = null;
         if (!Objects.equals(txt_floor_number.getText(), "")) {
             floors = txt_floor_number.getText();
         }
-        if (!Objects.equals(txt_room_number.getText(), "")){
+        if (!Objects.equals(txt_room_number.getText(), "")) {
             rooms = txt_room_number.getText();
         }
 
@@ -102,8 +106,7 @@ public class HelloController {
         yearOfCreation = txt_year_of_creation.getText();
         calculateTotalValue();
 
-        try
-        {
+        try {
             pst = con.prepareStatement("insert into main(price,address,area,lawInfo,floorNumber,roomNumber,yearOfCreation) " +
                     "values(?,?,?,?,?,?,?)");
             try {
@@ -138,7 +141,7 @@ public class HelloController {
                 Finance.CutFromTotalCash(Float.parseFloat(price));
                 //temprroy
                 Finance.displayFinance();
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -154,17 +157,15 @@ public class HelloController {
             }
 
 
-        }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
 
     @FXML
-    void Sell(ActionEvent event)  {
-        String id,price;
+    void Sell(ActionEvent event) {
+        String id, price;
         id = txt_id.getText();
         price = txt_price.getText();
         calculateTotalValue();
@@ -175,7 +176,7 @@ public class HelloController {
         try {
             pst = con.prepareStatement("UPDATE main SET price=?");
             pst.setString(1, price);
-        }catch (Exception e){
+        } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Enter right values plz");
@@ -187,7 +188,7 @@ public class HelloController {
 
         try {
             pst = con.prepareStatement("DELETE FROM main WHERE id=?");
-            pst.setInt(1,Integer.parseInt(id));
+            pst.setInt(1, Integer.parseInt(id));
             pst.executeUpdate();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -236,7 +237,7 @@ public class HelloController {
             pst.setString(5, floors);
             pst.setString(6, rooms);
             pst.setString(7, yearOfCreation);
-            pst.setInt(8,Integer.parseInt(id));
+            pst.setInt(8, Integer.parseInt(id));
             pst.executeUpdate();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -259,33 +260,14 @@ public class HelloController {
         }
     }
 
-    public void calculateTotalValue() {
-        // هاي الدالة تاخذ تنطيني مجموع قيم الاسعار مال كل الاملاك
-        try {
-            String query = "SELECT SUM(price) as total FROM main";
-            pst = con.prepareStatement(query);
-            ResultSet rs = pst.executeQuery();
-            if (rs.next()) {
-                double total = rs.getDouble("total");
-                Finance.setValueOfProperties((float) total);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void table()
-    {
+    public void table() {
         Connect();
         ObservableList<House> houses = FXCollections.observableArrayList();
-        try
-        {
+        try {
             pst = con.prepareStatement("select id,price,address,area,lawInfo,floorNumber,roomNumber,yearOfCreation from main");
             ResultSet rs = pst.executeQuery();
             {
-                while (rs.next())
-                {
+                while (rs.next()) {
                     House house = new House();
                     house.setId(rs.getString("id"));
                     house.setPrice(rs.getString("price"));
@@ -309,21 +291,16 @@ public class HelloController {
             colomn_year_of_creation.setCellValueFactory(f -> f.getValue().yearOfCreationProperty());
 
 
-
+        } catch (SQLException ex) {
+            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        catch (SQLException ex)
-        {
-            Logger.getLogger(HelloController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        table_main.setRowFactory( tv -> {
+        table_main.setRowFactory(tv -> {
             TableRow<House> myRow = new TableRow<>();
-            myRow.setOnMouseClicked (event ->
+            myRow.setOnMouseClicked(event ->
             {
-                if (event.getClickCount() == 1 && (!myRow.isEmpty()))
-                {
-                    myIndex =  table_main.getSelectionModel().getSelectedIndex();
+                if (event.getClickCount() == 1 && (!myRow.isEmpty())) {
+                    myIndex = table_main.getSelectionModel().getSelectedIndex();
                     id = Integer.parseInt(String.valueOf(table_main.getItems().get(myIndex).getId()));
 
                     txt_id.setText(table_main.getItems().get(myIndex).getId());
@@ -336,8 +313,6 @@ public class HelloController {
                     txt_year_of_creation.setText(table_main.getItems().get(myIndex).getYearOfCreation());
 
 
-
-
                 }
             });
             return myRow;
@@ -346,28 +321,21 @@ public class HelloController {
 
     }
 
-
-    // plug in the database
-    Connection con;
-    PreparedStatement pst;
-    int myIndex;
-    int id;
-
-    //connecting the App with local Database
-    public void Connect()
-    {
+    public void calculateTotalValue() {
+        // هاي الدالة تاخذ تنطيني مجموع قيم الاسعار مال كل الاملاك
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/opp","root","");
-        } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-            System.out.println("The error is here bitch");
+            String query = "SELECT SUM(price) as total FROM main";
+            pst = con.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                double total = rs.getDouble("total");
+                Finance.setValueOfProperties((float) total);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-    public void initialize(){
-    Connect();
-    table();
-    }
+
     private void setTextsEmpty() {
         txt_id.setText("");
         txt_address.setText("");
@@ -378,5 +346,43 @@ public class HelloController {
         txt_room_number.setText("");
         txt_year_of_creation.setText("");
     }
+
+    //connecting the App with local Database
+    Connection con;
+    PreparedStatement pst;
+    int myIndex;
+    int id;
+
+    public void Connect() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/opp", "root", "");
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("The error is here bitch");
+        }
+    }
+
+    public void initialize() {
+        Connect();
+        table();
+    }
+
+    //Switch between Scenes
+    @FXML
+    private Label welcomeText;
+
+    @FXML
+    public void switchToScene2(ActionEvent event) throws IOException {
+         Stage stage;
+         Scene scene;
+         Parent root;
+
+        root = FXMLLoader.load(getClass().getResource("finance.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
 
 }

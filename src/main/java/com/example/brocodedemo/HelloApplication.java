@@ -15,10 +15,10 @@ import java.util.Objects;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("hello-view.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
         // Group root = new Group();
-        Scene scene = new Scene(root, 900, 600, Color.LIGHTSKYBLUE);
+        Scene scene = new Scene(root, 900, 600);
         Text text = new Text("hooooo!");
         text.setX(100);
         text.setY(100);

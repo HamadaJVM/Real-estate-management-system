@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #1b2821;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.brocodedemo.FinanceController">
+   <children>
+      <Circle fill="#d0d74d" layoutX="423.0" layoutY="297.0" radius="215.0" stroke="#6c9f85" strokeType="INSIDE" strokeWidth="5.0" />
+      <Circle fill="#1b2821" layoutX="487.0" layoutY="334.0" radius="185.0" stroke="#6c9f85" strokeType="INSIDE" strokeWidth="3.0" />
+      <Circle fill="#d0d74d" layoutX="547.0" layoutY="367.0" radius="145.0" stroke="#6c9f85" strokeType="INSIDE" strokeWidth="3.0" />
+      <Button layoutX="477.0" layoutY="465.0" mnemonicParsing="false" onAction="#switchToScene1" prefHeight="25.0" prefWidth="50.0" text="Done">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button layoutX="321.0" layoutY="465.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Update">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <PasswordField layoutX="350.0" layoutY="187.0" promptText="enter password first" />
+      <Label layoutX="335.0" layoutY="238.0" prefHeight="17.0" prefWidth="85.0" text="THE CASH" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="262.0" layoutY="329.0" prefHeight="23.0" prefWidth="179.0" text="PROPERTY VALUE :" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="283.0" layoutY="394.0" prefHeight="23.0" prefWidth="137.0" text="TOTAL VALUE :" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextField editable="false" layoutX="428.0" layoutY="237.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField editable="false" layoutX="424.0" layoutY="393.0" />
+      <TextField editable="false" layoutX="428.0" layoutY="328.0" />
+      <Text fill="WHITE" layoutX="339.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FINANCE" wrappingWidth="179.0">
+         <font>
+            <Font name="Calibri Bold Italic" size="48.0" />
+         </font>
+      </Text>
+      <TextField layoutX="441.0" layoutY="285.0" prefHeight="25.0" prefWidth="50.0" />
+      <TextField layoutX="353.0" layoutY="285.0" prefHeight="25.0" prefWidth="50.0" />
+      <Label layoutX="309.0" layoutY="286.0" prefHeight="23.0" prefWidth="41.0" text="ADD" textFill="#36cd28">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="499.0" layoutY="286.0" prefHeight="23.0" prefWidth="41.0" text="CUT" textFill="#c92a2a">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
