@@ -99,7 +99,7 @@ public class HelloController {
         yearOfCreation = txt_year_of_creation.getText();
         try
         {
-            pst = con.prepareStatement("insert into main(price,address,area,lawInfo,floorNumber,roomNubmer,yearOfCreation) " +
+            pst = con.prepareStatement("insert into main(price,address,area,lawInfo,floorNumber,roomNumber,yearOfCreation) " +
                     "values(?,?,?,?,?,?,?)");
             try {
                 pst.setString(1, price);
@@ -115,7 +115,7 @@ public class HelloController {
                 alert.setTitle("Buying");
 
                 alert.setHeaderText("Buying process");
-                alert.setContentText("Record Addedddd!");
+                alert.setContentText("DONE !");
 
                 alert.showAndWait();
                 table();
@@ -129,7 +129,7 @@ public class HelloController {
                 txt_room_number.setText("");
                 txt_year_of_creation.setText("");
 
-                txt_id.requestFocus();
+                //txt_id.requestFocus();
             }catch (Exception e){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -153,13 +153,84 @@ public class HelloController {
     }
 
 
+    @FXML
+    void Sell(ActionEvent event) {
+        String id;
+        id = txt_id.getText();
+
+        try {
+            pst = con.prepareStatement("DELETE FROM main WHERE id=?");
+            pst.setInt(1,Integer.parseInt(id));
+            pst.executeUpdate();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sell");
+            alert.setHeaderText("Sell process");
+            alert.setContentText("DONE !");
+            alert.showAndWait();
+            table();
+            setTextsEmpty();
+            txt_price.requestFocus();
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Enter right values plz");
+            alert.showAndWait();
+            setTextsEmpty();
+        }
+    }
+
+
+    @FXML
+    void Update(ActionEvent event) {
+        String lawInfo, address, yearOfCreation, price, area, floors, rooms, id;
+        id = txt_id.getText();
+        floors = txt_floor_number.getText();
+        rooms = txt_room_number.getText();
+        price = txt_price.getText();
+        area = txt_area.getText();
+        lawInfo = txt_law_info.getText();
+        address = txt_address.getText();
+        yearOfCreation = txt_year_of_creation.getText();
+
+        try {
+            pst = con.prepareStatement("UPDATE main SET price=?, address=?, area=?, lawInfo=?, floorNumber=?, roomNumber=?, yearOfCreation=? WHERE id=?");
+            pst.setString(1, price);
+            pst.setString(2, address);
+            pst.setString(3, area);
+            pst.setString(4, lawInfo);
+            pst.setString(5, floors);
+            pst.setString(6, rooms);
+            pst.setString(7, yearOfCreation);
+            pst.setInt(8,Integer.parseInt(id));
+            pst.executeUpdate();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Update");
+            alert.setHeaderText("Update process");
+            alert.setContentText("DONE !");
+            alert.showAndWait();
+            table();
+            txt_price.requestFocus();
+
+
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Enter right values plz");
+            alert.showAndWait();
+            setTextsEmpty();
+        }
+    }
+
     public void table()
     {
         Connect();
         ObservableList<House> houses = FXCollections.observableArrayList();
         try
         {
-            pst = con.prepareStatement("select id,price,address,area,lawInfo,floorNumber,roomNubmer,yearOfCreation from main");
+            pst = con.prepareStatement("select id,price,address,area,lawInfo,floorNumber,roomNumber,yearOfCreation from main");
             ResultSet rs = pst.executeQuery();
             {
                 while (rs.next())
@@ -171,7 +242,7 @@ public class HelloController {
                     house.setArea(rs.getString("area"));
                     house.setLawInfo(rs.getString("lawInfo"));
                     house.setFloorNumber(rs.getString("floorNumber"));
-                    house.setRoomNumber(rs.getString("roomNubmer"));
+                    house.setRoomNumber(rs.getString("roomNumber"));
                     house.setYearOfCreation(rs.getString("yearOfCreation"));
                     houses.add(house);
                 }
@@ -224,14 +295,6 @@ public class HelloController {
 
     }
 
-    @FXML
-    void Sell(ActionEvent event) {
-
-    }
-
-    @FXML
-    void Update(ActionEvent event) {
-    }
 
     // plug in the database
     Connection con;
@@ -239,6 +302,7 @@ public class HelloController {
     int myIndex;
     int id;
 
+    //connecting the App with local Database
     public void Connect()
     {
         try {
@@ -253,4 +317,15 @@ public class HelloController {
     Connect();
     table();
     }
+    private void setTextsEmpty() {
+        txt_id.setText("");
+        txt_address.setText("");
+        txt_price.setText("");
+        txt_area.setText("");
+        txt_law_info.setText("");
+        txt_floor_number.setText("");
+        txt_room_number.setText("");
+        txt_year_of_creation.setText("");
+    }
+
 }
