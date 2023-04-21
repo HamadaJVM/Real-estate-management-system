@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -86,10 +87,14 @@ public class HelloController {
 
     @FXML
     void Buy(ActionEvent event) {
-// لدينا مشكلة هنا لا يسمح بادخال قيم فارغة في الغرف  عدد الطوابق
-        String lawInfo , address,yearOfCreation,price, area,floors,rooms;
-        floors = txt_floor_number.getText();
-        rooms = txt_room_number.getText();
+        String lawInfo , address,yearOfCreation,price, area,floors = null,rooms = null;
+        if (!Objects.equals(txt_floor_number.getText(), "")) {
+            floors = txt_floor_number.getText();
+        }
+        if (!Objects.equals(txt_room_number.getText(), "")){
+            rooms = txt_room_number.getText();
+        }
+
         price = txt_price.getText();
         area = txt_area.getText();
         lawInfo = txt_law_info.getText();
@@ -106,8 +111,8 @@ public class HelloController {
                 pst.setString(2, address);
                 pst.setString(3, area);
                 pst.setString(4, lawInfo);
-                pst.setInt(5, Integer.parseInt(floors));
-                pst.setInt(6, Integer.parseInt(rooms));
+                pst.setString(5, floors);
+                pst.setString(6, rooms);
                 pst.setString(7, yearOfCreation);
                 pst.executeUpdate();
 
