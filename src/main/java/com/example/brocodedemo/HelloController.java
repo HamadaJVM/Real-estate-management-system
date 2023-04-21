@@ -86,10 +86,8 @@ public class HelloController {
 
     @FXML
     void Buy(ActionEvent event) {
-
+// لدينا مشكلة هنا لا يسمح بادخال قيم فارغة في الغرف  عدد الطوابق
         String lawInfo , address,yearOfCreation,price, area,floors,rooms;
-
-
         floors = txt_floor_number.getText();
         rooms = txt_room_number.getText();
         price = txt_price.getText();
@@ -97,6 +95,8 @@ public class HelloController {
         lawInfo = txt_law_info.getText();
         address = txt_address.getText();
         yearOfCreation = txt_year_of_creation.getText();
+        calculateTotalValue();
+
         try
         {
             pst = con.prepareStatement("insert into main(price,address,area,lawInfo,floorNumber,roomNumber,yearOfCreation) " +
@@ -106,8 +106,8 @@ public class HelloController {
                 pst.setString(2, address);
                 pst.setString(3, area);
                 pst.setString(4, lawInfo);
-                pst.setString(5, floors);
-                pst.setString(6, rooms);
+                pst.setInt(5, Integer.parseInt(floors));
+                pst.setInt(6, Integer.parseInt(rooms));
                 pst.setString(7, yearOfCreation);
                 pst.executeUpdate();
 
@@ -129,8 +129,12 @@ public class HelloController {
                 txt_room_number.setText("");
                 txt_year_of_creation.setText("");
 
-                //txt_id.requestFocus();
+                //استقطاع من الكاش بعد الشراء
+                Finance.CutFromTotalCash(Float.parseFloat(price));
+                //temprroy
+                Finance.displayFinance();
             }catch (Exception e){
+                System.out.println(e.getMessage());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Enter right values plz");
@@ -154,9 +158,27 @@ public class HelloController {
 
 
     @FXML
-    void Sell(ActionEvent event) {
-        String id;
+    void Sell(ActionEvent event)  {
+        String id,price;
         id = txt_id.getText();
+        price = txt_price.getText();
+        calculateTotalValue();
+
+
+        // من المحتمل ان المستخدم يعدل على السعر قبل البيع ومحتمل مايضغط على زر التحديث
+        //لذلك بداخل دالة البيع راح نخلي يحدث السعر بشكل مباشر مباشرة عند الضغط على زر البيع
+        try {
+            pst = con.prepareStatement("UPDATE main SET price=?");
+            pst.setString(1, price);
+        }catch (Exception e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Enter right values plz");
+            alert.showAndWait();
+            txt_price.setText("");
+
+        }
+        //
 
         try {
             pst = con.prepareStatement("DELETE FROM main WHERE id=?");
@@ -171,6 +193,11 @@ public class HelloController {
             table();
             setTextsEmpty();
             txt_price.requestFocus();
+            //استقطاع الفلوس من الكاش
+            Finance.AddOnTotalCash(Float.parseFloat(price));
+            calculateTotalValue();
+            //temprroy
+            Finance.displayFinance();
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -193,6 +220,7 @@ public class HelloController {
         lawInfo = txt_law_info.getText();
         address = txt_address.getText();
         yearOfCreation = txt_year_of_creation.getText();
+        calculateTotalValue();
 
         try {
             pst = con.prepareStatement("UPDATE main SET price=?, address=?, area=?, lawInfo=?, floorNumber=?, roomNumber=?, yearOfCreation=? WHERE id=?");
@@ -213,7 +241,9 @@ public class HelloController {
             alert.showAndWait();
             table();
             txt_price.requestFocus();
-
+            calculateTotalValue();
+            //temprroy
+            Finance.displayFinance();
 
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -223,6 +253,22 @@ public class HelloController {
             setTextsEmpty();
         }
     }
+
+    public void calculateTotalValue() {
+        // هاي الدالة تاخذ تنطيني مجموع قيم الاسعار مال كل الاملاك
+        try {
+            String query = "SELECT SUM(price) as total FROM main";
+            pst = con.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                double total = rs.getDouble("total");
+                Finance.setValueOfProperties((float) total);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void table()
     {
