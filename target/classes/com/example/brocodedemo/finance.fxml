@@ -19,13 +19,13 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button layoutX="321.0" layoutY="465.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Update">
+      <Button layoutX="321.0" layoutY="465.0" mnemonicParsing="false" onAction="#updateButton" prefHeight="25.0" prefWidth="60.0" text="Update">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
       <PasswordField layoutX="350.0" layoutY="187.0" promptText="enter password first" />
-      <Label layoutX="335.0" layoutY="238.0" prefHeight="17.0" prefWidth="85.0" text="THE CASH" textFill="WHITE">
+      <Label layoutX="313.0" layoutY="238.0" prefHeight="23.0" prefWidth="107.0" text="THE CASH:" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
@@ -35,21 +35,21 @@
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="283.0" layoutY="394.0" prefHeight="23.0" prefWidth="137.0" text="TOTAL VALUE :" textFill="WHITE">
+      <Label layoutX="283.0" layoutY="394.0" prefHeight="23.0" prefWidth="137.0" text="NET WORTH:" textFill="WHITE">
          <font>
             <Font name="Calibri Bold" size="20.0" />
          </font>
       </Label>
-      <TextField editable="false" layoutX="428.0" layoutY="237.0" prefHeight="25.0" prefWidth="149.0" />
-      <TextField editable="false" layoutX="424.0" layoutY="393.0" />
-      <TextField editable="false" layoutX="428.0" layoutY="328.0" />
+      <TextField fx:id="txt_cash" editable="false" layoutX="428.0" layoutY="237.0" prefHeight="25.0" prefWidth="149.0" />
+      <TextField fx:id="txt_net_worth" editable="false" layoutX="424.0" layoutY="393.0" />
+      <TextField fx:id="txt_property" editable="false" layoutX="428.0" layoutY="328.0" />
       <Text fill="WHITE" layoutX="339.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FINANCE" wrappingWidth="179.0">
          <font>
             <Font name="Calibri Bold Italic" size="48.0" />
          </font>
       </Text>
-      <TextField layoutX="441.0" layoutY="285.0" prefHeight="25.0" prefWidth="50.0" />
-      <TextField layoutX="353.0" layoutY="285.0" prefHeight="25.0" prefWidth="50.0" />
+      <TextField fx:id="txt_cut" layoutX="441.0" layoutY="285.0" prefHeight="25.0" prefWidth="50.0" />
+      <TextField fx:id="txt_add" layoutX="353.0" layoutY="285.0" prefHeight="25.0" prefWidth="50.0" />
       <Label layoutX="309.0" layoutY="286.0" prefHeight="23.0" prefWidth="41.0" text="ADD" textFill="#36cd28">
          <font>
             <Font name="Calibri Bold" size="20.0" />

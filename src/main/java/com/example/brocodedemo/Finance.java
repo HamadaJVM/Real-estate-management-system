@@ -1,23 +1,30 @@
 package com.example.brocodedemo;
-import java.util.Scanner;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class Finance {
    private static float VALUE_OF_PROPERTIES =0;
     private static float TOTAL_CASH = 1000;
-    private static  float ALL_NET_WORTH;
-
-//?how can I call it
-    static void setTotalCash(){
-        Scanner cin = new Scanner(System.in);
-        System.out.println("Enter the Total Cash Or Edit");
-        TOTAL_CASH = cin.nextFloat();
-    }
+    private static float ALL_NET_WORTH ;
     static void AddOnTotalCash(float var){
         TOTAL_CASH += var;
         VALUE_OF_PROPERTIES -=var;
     }
-    static void CutFromTotalCash(float var){
+    static void cutFromTotalCash(float var){
         TOTAL_CASH -= var;
         VALUE_OF_PROPERTIES +=var;
+    }
+    static void AddOnTotalCash(String var){
+        if (!var.isEmpty())
+           TOTAL_CASH += Float.parseFloat(var);
+
+    }
+    static void cutFromTotalCash(String var){
+        if (!var.isEmpty())
+            TOTAL_CASH -= Float.parseFloat(var);
+
     }
 
     public static void setValueOfProperties(float var){
@@ -28,6 +35,7 @@ public class Finance {
         ALL_NET_WORTH = TOTAL_CASH + VALUE_OF_PROPERTIES;
 
     }
+
     static public void displayFinance(){
         System.out.println("-------------------");
         System.out.println("Total Cash = " + TOTAL_CASH);
@@ -37,4 +45,15 @@ public class Finance {
 
     }
 
+    public static float getValueOfProperties() {
+        return VALUE_OF_PROPERTIES;
+    }
+
+    public static float getTotalCash() {
+        return TOTAL_CASH;
+    }
+
+    public static float getAllNetWorth() {
+        return ALL_NET_WORTH;
+    }
 }

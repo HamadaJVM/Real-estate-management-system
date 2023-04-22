@@ -138,7 +138,7 @@ public class MainController {
                 txt_year_of_creation.setText("");
 
                 //استقطاع من الكاش بعد الشراء
-                Finance.CutFromTotalCash(Float.parseFloat(price));
+                Finance.cutFromTotalCash(Float.parseFloat(price));
                 //temprroy
                 Finance.displayFinance();
             } catch (Exception e) {
@@ -169,6 +169,7 @@ public class MainController {
         id = txt_id.getText();
         price = txt_price.getText();
         calculateTotalValue();
+
 
 
         // من المحتمل ان المستخدم يعدل على السعر قبل البيع ومحتمل مايضغط على زر التحديث
@@ -202,6 +203,7 @@ public class MainController {
             //استقطاع الفلوس من الكاش
             Finance.AddOnTotalCash(Float.parseFloat(price));
             calculateTotalValue();
+
             //temprroy
             Finance.displayFinance();
 
@@ -227,6 +229,7 @@ public class MainController {
         address = txt_address.getText();
         yearOfCreation = txt_year_of_creation.getText();
         calculateTotalValue();
+
 
         try {
             pst = con.prepareStatement("UPDATE main SET price=?, address=?, area=?, lawInfo=?, floorNumber=?, roomNumber=?, yearOfCreation=? WHERE id=?");
@@ -335,7 +338,6 @@ public class MainController {
             e.printStackTrace();
         }
     }
-
     private void setTextsEmpty() {
         txt_id.setText("");
         txt_address.setText("");
@@ -377,7 +379,7 @@ public class MainController {
          Stage stage;
          Scene scene;
          Parent root;
-
+        calculateTotalValue();
         root = FXMLLoader.load(getClass().getResource("finance.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
