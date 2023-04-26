@@ -379,7 +379,7 @@ public class MainController {
          Stage stage;
          Scene scene;
          Parent root;
-        calculateTotalValue();
+       // calculateTotalValue();
         root = FXMLLoader.load(getClass().getResource("finance.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);

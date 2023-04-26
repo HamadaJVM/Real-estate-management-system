@@ -3,8 +3,6 @@ package com.example.brocodedemo;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Scanner;
-
 public class House extends Info{
     private final StringProperty floorNumber ;
     private final StringProperty roomNumber ;

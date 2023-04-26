@@ -11,12 +11,7 @@ public class Info extends Finance{
     private final StringProperty lawInfo ;
     private final StringProperty address ;
     private final StringProperty price ;
-    /*int id;
-    private float area;
-    private  String lawInfo ;
-    private String address;
-    private float price;
-*/
+
     public Info() {
         id = new SimpleStringProperty(this,"id");
         area = new SimpleStringProperty(this,"area");
@@ -25,23 +20,6 @@ public class Info extends Finance{
         price = new SimpleStringProperty(this,"price");
     }
 
-
- /*   public void setInfo(){
-        Scanner cin = new Scanner(System.in);
-        System.out.println("Enter the Id");
-        id = cin.nextInt();
-        System.out.println("Enter the aera");
-        area = cin.nextFloat();
-        System.out.println("Enter the lawInfo");
-        lawInfo = cin.next();
-        System.out.println("Enter the address");
-        address = cin.next();
-        System.out.println("Enter the price");
-        price = cin.nextFloat();
-
-        updateTotalCash(price);
-        updateValueOfProperties(price);
-    }*/
     public void displayInfo(){
         System.out.println("--------------");
         System.out.println("ID " + id);
@@ -49,7 +27,6 @@ public class Info extends Finance{
         System.out.println("lawInfo " + lawInfo);
         System.out.println("Address " + address);
         System.out.println("Price  " + price);
-
 
     }
     // Getter & Setter

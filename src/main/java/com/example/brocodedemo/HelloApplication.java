@@ -17,14 +17,10 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main.fxml"));
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("main.fxml")));
-        // Group root = new Group();
         Scene scene = new Scene(root, 900, 600);
-        Text text = new Text("hooooo!");
-        text.setX(100);
-        text.setY(100);
-        text.setFont(Font.font("Areal",30));
 
-        stage.setTitle("Stage Demo!");
+
+        stage.setTitle("Real Estate Mangment System ");
         Image icon = new Image("C:\\Users\\Hmada_Z\\IdeaProjects\\BroCodeDemo\\src\\icon.png");
         stage.getIcons().add(icon);
         stage.setScene(scene);
